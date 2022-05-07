@@ -1,4 +1,4 @@
-(ns summle
+(ns summle.solver
   (:require [clojure.math.combinatorics :as combo]
             [clojure.test :refer :all]
             ))
