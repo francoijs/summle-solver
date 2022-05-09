@@ -1,8 +1,39 @@
-body{
+body {
     font-family: "Arial", sans-serif;
 }
-
-.container{
+.container {
     width: 600px;
     margin: 0 auto;
+}
+
+.keyboard {
+	width: 35px;
+	height: 35px;
+	margin-top: 4px;
+}
+.card {
+	width: 55px;
+	height: 35px;
+	margin-top: 4px;
+	readonly: true;
+}
+.highlighted {
+	border-color: red;
+}
+.operation {
+	width: 35px;
+	height: 35px;
+	readonly: true;
+}
+#result {
+	width: 75px;
+	height: 35px;
+	readonly: true;
+}
+#solve {
+	width: 75px;
+	height: 35px;
+}
+#solution {
+	readonly: true;
 }
