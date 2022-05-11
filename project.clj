@@ -9,7 +9,7 @@
                  [ring/ring-jetty-adapter "1.6.3"]
                  [org.clojure/math.combinatorics "0.1.5"]
                  [ring "1.1.8"]
-                 [compojure "1.1.5"]
+                 [compojure "1.6.2"]
                  [de.ubercode.clostache/clostache "1.3.1"]
                  ]
   :main summle.core

@@ -5,7 +5,7 @@
 
 ;; apply op to elements of pair, or return false is impossible
 (with-test
-  (defn op-apply [op pair]
+  (defn- op-apply [op pair]
     (let [a (apply max pair)
           b (apply min pair)]
       (case op
@@ -26,7 +26,7 @@
 
 ;; remove 1st occurence of el from ls
 (with-test
-  (defn delete-first [el ls]
+  (defn- delete-first [el ls]
     (let [[n m] (split-with
                  (partial not= el)
                  ls)]
@@ -50,7 +50,7 @@
 ;; return new state after applying op on elements in pair,
 ;; or false if impossible
 (with-test
-  (defn state-next [state op pair]
+  (defn- state-next [state op pair]
     (let [res (op-apply op pair)]
       (if res
         ;; operation worked: make new state with the result
@@ -70,7 +70,7 @@
 
 ;; return list of possible next states
 (with-test
-  (defn state-next-all [state]
+  (defn- state-next-all [state]
     ;; loop on possible pairs of elements
     (reduce
      (fn [res pair]
@@ -93,7 +93,7 @@
 ;; build and search the tree of states, starting from 'state'
 ;; return the list of winning states that match value 'result'
 (with-test
-  (defn find-winning-states [state result]
+  (defn- find-winning-states [state result]
     (cond
       ;; state is a winner?
       (some #{result} (:numbers state)) (list state)

@@ -4,6 +4,8 @@
    [ring.adapter.jetty :as jetty]
    [clostache.parser :as clostache]
    [compojure.route :as route]
+   [compojure.handler]
+   [summle.solver]
    ))
 
 (defn read-template [template-name]
@@ -19,10 +21,17 @@
 
 ;; Routing
 (defroutes main-routes
+  (GET "/solve" [result & cards]
+       (str "Result: " (summle.solver/solve
+                        (map #(Integer/parseUnsignedInt %) (vals cards))
+                        (Integer/parseUnsignedInt result))))
   (GET "/" [] (index))
   (route/resources "/")
   (route/not-found "404 Not Found")
   )
 
+;; Required to extract params from the query
+(def routes-handler (-> main-routes compojure.handler/api))
+
 (defn -main []
-  (jetty/run-jetty main-routes {:port 5000}))
+  (jetty/run-jetty routes-handler {:port 5000}))
