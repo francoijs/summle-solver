@@ -34,6 +34,7 @@
 				<button class="keyboard" type="button">11</button>
 				<button class="keyboard" type="button">12</button>
 				<button class="keyboard" type="button">100</button>
+				<button id="clear" type="button">CLR</button>
 				<br>
 			</span>
 			<h2>Input</h2>
@@ -98,11 +99,15 @@
 	</body>
 	<script>
 	 let card = 1;
-	 $(document).ready(function() {
+	 function clear() {
+		 $('#card'+card).removeClass('highlighted');
+		 $('#target').removeClass('highlighted');
+		 card = 1;
 		 $('#card'+card).addClass('highlighted');
-		 $('.card').val('');
-		 $('#target').val('');
-	 });
+		 $('.card,#target,.left,.operation,.right,.result').val('');
+	 }
+	 $(document).ready(clear);
+	 $('#clear').on('click', clear);
 	 $('.keyboard').on('click', function() {
 		 if (card > 7)
 			 return;
@@ -131,7 +136,7 @@
 		 }
 	 });
 	 $('#solve').on('click', function() {
-		 var complete = true;
+		 let complete = true;
 		 // check if all inputs are filled
 		 $("[id^='card'], #target").each(function() {
 			 if ($(this).val() === '') {
@@ -144,7 +149,7 @@
 			 return;
 		 }
 		 // send query to solver
-		 var query = 'solve?result=' + $('#target').val() + '&'
+		 let query = 'solve?result=' + $('#target').val() + '&'
 				   + [1,2,3,4,5,6].map(function(n) {
 					   return 'card' + n + '=' + $('#card'+n).val();
 				   }).join('&');

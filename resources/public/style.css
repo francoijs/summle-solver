@@ -6,7 +6,8 @@ body {
     margin: 0 auto;
 }
 
-.keyboard {
+.keyboard,
+#clear {
 	width: 35px;
 	height: 35px;
 	margin-top: 4px;
@@ -38,6 +39,4 @@ body {
 #solve {
 	width: 75px;
 	height: 35px;
-}
-#solution {
 }
