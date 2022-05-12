@@ -1,9 +1,9 @@
-(defproject summle-solver "0.1.0-SNAPSHOT"
+(defproject summle-solver "0.1.0"
   :min-lein-version "2.0.0"
   :description "Solver for summle.net"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :url "https://github.com/francoijs/summle-solver"
+  :license {:name "GNU GPL v3+"
+            :url "http://www.gnu.org/licenses/gpl-3.0.en.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-jetty-adapter "1.6.3"]
