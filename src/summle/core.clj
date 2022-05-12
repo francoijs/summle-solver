@@ -5,6 +5,7 @@
    [clostache.parser :as clostache]
    [compojure.route :as route]
    [compojure.handler]
+   [clojure.data.json :as json]
    [summle.solver]
    ))
 
@@ -22,7 +23,7 @@
 ;; Routing
 (defroutes main-routes
   (GET "/solve" [result & cards]
-       (str "Result: " (summle.solver/solve
+       (json/write-str (summle.solver/solve
                         (map #(Integer/parseUnsignedInt %) (vals cards))
                         (Integer/parseUnsignedInt result))))
   (GET "/" [] (index))

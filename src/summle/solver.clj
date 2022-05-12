@@ -114,17 +114,24 @@
   )
 (test #'find-winning-states)
 
+;; fix the order of arguments in an operation
+(defn- op-normalize [op]
+  (let [a (apply max (rest op))
+        b (apply min (rest op))]
+    (list (first op) a b)))
+
 ;; return first shortest solution
 (with-test
   (defn solve [numbers result]
     (let [winners (find-winning-states (make-state numbers) result)]
       (if (empty? winners) false
-          (:operations
-           (first (sort (fn [x y]
-                          (< (count (:operations x))
-                             (count (:operations y))))
-                        winners))))))
-
+          (into [] (map op-normalize
+                        (:operations
+                         (first (sort (fn [x y]
+                                        (< (count (:operations x))
+                                           (count (:operations y))))
+                                      winners))))))))
+  
   ;; no solution
   (is (not (solve '(3 4 5) 13)))
   ;; solution in 4

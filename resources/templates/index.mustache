@@ -38,84 +38,84 @@
 			</span>
 			<h2>Input</h2>
 			<span>
-				<input id="card1" class="card" type="text"></input>
-				<input id="card2" class="card" type="text"></input>
-				<input id="card3" class="card" type="text"></input>
-				<input id="card4" class="card" type="text"></input>
-				<input id="card5" class="card" type="text"></input>
-				<input id="card6" class="card" type="text"></input>
+				<input id="card1" class="card" type="text" readonly></input>
+				<input id="card2" class="card" type="text" readonly></input>
+				<input id="card3" class="card" type="text" readonly></input>
+				<input id="card4" class="card" type="text" readonly></input>
+				<input id="card5" class="card" type="text" readonly></input>
+				<input id="card6" class="card" type="text" readonly></input>
 				<br>
 			</span>
 			<h2>Result</h2>
 			<span>
-				<input id="result" type="text"></input>
+				<input id="target" type="text" readonly></input>
 				<button id="solve" type="button">Solve!</button>
 			</span>
 			<div id="solution">
 				<h2>Solution</h2>
-				<span>
-					<input class="card" type="text" readonly></input>
+				<span id="op1">
+					<input class="left" type="text" readonly></input>
 					<input class="operation" type="text" readonly></input>
-					<input class="card" type="text" readonly></input>
+					<input class="right" type="text" readonly></input>
 					<span>=</span>
-					<input class="card" type="text" readonly></input>
+					<input class="result" type="text" readonly></input>
 					<br>
 				</span>
-				<span>
-					<input class="card" type="text" readonly></input>
+				<span id="op2">
+					<input class="left" type="text" readonly></input>
 					<input class="operation" type="text" readonly></input>
-					<input class="card" type="text" readonly></input>
+					<input class="right" type="text" readonly></input>
 					<span>=</span>
-					<input class="card" type="text" readonly></input>
+					<input class="result" type="text" readonly></input>
 					<br>
 				</span>
-				<span>
-					<input class="card" type="text" readonly></input>
+				<span id="op3">
+					<input class="left" type="text" readonly></input>
 					<input class="operation" type="text" readonly></input>
-					<input class="card" type="text" readonly></input>
+					<input class="right" type="text" readonly></input>
 					<span>=</span>
-					<input class="card" type="text" readonly></input>
+					<input class="result" type="text" readonly></input>
 					<br>
 				</span>
-				<span>
-					<input class="card" type="text" readonly></input>
+				<span id="op4">
+					<input class="left" type="text" readonly></input>
 					<input class="operation" type="text" readonly></input>
-					<input class="card" type="text" readonly></input>
+					<input class="right" type="text" readonly></input>
 					<span>=</span>
-					<input class="card" type="text" readonly></input>
+					<input class="result" type="text" readonly></input>
 					<br>
 				</span>
-				<span>
-					<input class="card" type="text" readonly></input>
+				<span id="op5">
+					<input class="left" type="text" readonly></input>
 					<input class="operation" type="text" readonly></input>
-					<input class="card" type="text" readonly></input>
+					<input class="right" type="text" readonly></input>
 					<span>=</span>
-					<input class="card" type="text" readonly></input>
+					<input class="result" type="text" readonly></input>
 					<br>
 				</span>
 			</div>
 		</div>
 	</body>
 	<script>
-	 var card = 1;
+	 let card = 1;
 	 $(document).ready(function() {
 		 $('#card'+card).addClass('highlighted');
 		 $('.card').val('');
-		 $('#result').val('');
+		 $('#target').val('');
 	 });
 	 $('.keyboard').on('click', function() {
 		 if (card > 7)
 			 return;
 		 n = parseInt($(this).text());
 		 if (card === 7) {
-			 // fill input 'result'
-			 res = parseInt($('#result').val()) || 0;
+			 // fill input 'target'
+			 res = parseInt($('#target').val()) || 0;
 			 res = res*10 + n;
 			 if (res > 999) {
-				 $('#result').val('');
+				 $('#target').val('');
 				 return;
 			 }
-			 $('#result').val(res);
+			 $('#target').val(res);
 		 }
 		 else if (card < 7) {
 			 // fill inputs 'card?'
@@ -126,14 +126,14 @@
 				 $('#card'+card).addClass('highlighted');
 			 }
 			 else {
-				 $('#result').addClass('highlighted');
+				 $('#target').addClass('highlighted');
 			 }
 		 }
 	 });
 	 $('#solve').on('click', function() {
 		 var complete = true;
 		 // check if all inputs are filled
-		 $("[id^='card'], #result").each(function() {
+		 $("[id^='card'], #target").each(function() {
 			 if ($(this).val() === '') {
 				 complete = false;
 				 return false;
@@ -144,12 +144,31 @@
 			 return;
 		 }
 		 // send query to solver
-		 var query = 'solve?result=' + $('#result').val() + '&'
+		 var query = 'solve?result=' + $('#target').val() + '&'
 				   + [1,2,3,4,5,6].map(function(n) {
 					   return 'card' + n + '=' + $('#card'+n).val();
 				   }).join('&');
-		 $.get(query, function(data) {
-			 console.log(data);
+		 $.getJSON(query, function(data) {
+			 if (data) {
+				 let n = 1;
+				 data.forEach(function(op) {
+					 let [operation, left, right]= op;
+					 let result = 0;
+					 switch (operation) {
+						 case "+": result = left + right; break;
+						 case "-": result = left - right; break;
+						 case "/": result = left / right; break;							 
+						 case "*": result = left * right; break;
+						 default:
+							 throw 'invalid operation '+operation;
+					 }
+					 $('#op'+ n).find('.left').val(left);
+					 $('#op'+ n).find('.operation').val(operation);
+					 $('#op'+ n).find('.right').val(right);
+					 $('#op'+ n).find('.result').val(result);
+					 n += 1;
+				 });
+			 }
 		 });
 	 })		 
 	</script>

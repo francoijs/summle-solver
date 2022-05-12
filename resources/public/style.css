@@ -11,29 +11,33 @@ body {
 	height: 35px;
 	margin-top: 4px;
 }
-.card {
-	width: 55px;
-	height: 35px;
-	margin-top: 4px;
-	readonly: true;
-}
 .highlighted {
 	border-color: red;
+}
+.card,
+.left,
+.right,
+.result {
+	width: 45px;
+	height: 35px;
+	margin-top: 4px;
+	text-align: center;
+	font-weight: bold;
 }
 .operation {
 	width: 35px;
 	height: 35px;
-	readonly: true;
+	text-align: center;
+	font-weight: bold;
 }
-#result {
+#target {
 	width: 75px;
 	height: 35px;
-	readonly: true;
+	text-align: center;
 }
 #solve {
 	width: 75px;
 	height: 35px;
 }
 #solution {
-	readonly: true;
 }

@@ -11,6 +11,7 @@
                  [ring "1.1.8"]
                  [compojure "1.6.2"]
                  [de.ubercode.clostache/clostache "1.3.1"]
+                 [org.clojure/data.json "2.4.0"]
                  ]
   :main summle.core
   )
