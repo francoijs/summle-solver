@@ -13,5 +13,6 @@
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [org.clojure/data.json "2.4.0"]
                  ]
+  :plugins []
   :main summle.core
   )

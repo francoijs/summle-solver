@@ -35,4 +35,5 @@
 (def routes-handler (-> main-routes compojure.handler/api))
 
 (defn -main []
-  (jetty/run-jetty routes-handler {:port 5000}))
+  (let [port (Integer/parseInt (get (System/getenv) "PORT" "5000"))]
+    (jetty/run-jetty routes-handler {:port port})))
