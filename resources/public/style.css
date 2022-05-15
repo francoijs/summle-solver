@@ -40,3 +40,8 @@ body {
 	width: 75px;
 	height: 35px;
 }
+#issues {
+	position: absolute;
+    bottom: 10;
+    left: 10;
+}
